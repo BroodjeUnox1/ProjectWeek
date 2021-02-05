@@ -16,7 +16,39 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
     node.addEventListener('animationend', handleAnimationEnd, {once: true});
   });
 
+
+// Toggle the modals
 function ToggleModal(Modal) {
   $(Modal).modal("toggle");
 }
 
+
+function edit(el){
+		console.log(el)
+		var data = el.dataset;
+
+		Object.keys(data).forEach(function (key) {
+		    let value = data[key];
+		    console.log(`${key} - ${value}`)
+
+		    $(`#edit_${key}`).val(value)
+
+		});
+
+		$('#edit_modal').modal('toggle')
+	}
+
+
+function update(){
+	var title = $('#edit_title').val()		
+	var thread = $('#edit_thread').val()
+	var id = $('#edit_id').val()
+
+	$.post('./api/update/update.php', {title: title, thread: thread, id: id}, function(response){
+		console.log(response)
+		if(response == 'Success'){
+			$('#edit_modal').modal('toggle')
+		}
+	})
+}
+	
